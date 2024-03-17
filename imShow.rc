@@ -1,0 +1,149 @@
+/*****************************  IMSHOW.RC  *********************************/
+/*                                                                         */
+/*  Ressourcefile to IMSHOW.EXE                                            */
+/*                                                                         */
+/*  IMSHOW.RC, Version 2.02, 1/93                                          */
+/*                                                                         */
+/***************************************************************************/
+
+#include <os2.h>        /* We need this                                    */
+#include "imshow.h"     /* The symbolic names of imShow are given in       */
+                        /* imShow.h, so we need this.                      */
+
+/***************************************************************************/
+/* This is the icon of imShow:                                             */
+/***************************************************************************/
+ICON    ID_RESOURCE imshow.ico
+
+/***************************************************************************/
+/* The definition of the menu bar:                                         */
+/***************************************************************************/
+MENU    ID_RESOURCE PRELOAD
+{
+  SUBMENU "~File",              IDM_FILE
+  {
+    MENUITEM "~Open...",          IDM_OPEN
+    MENUITEM SEPARATOR
+    MENUITEM "~Exit\tF3",         IDM_QUIT
+  }
+  SUBMENU "~View",              IDM_VIEW
+  {
+    MENUITEM "~Fit in window\tCtrl+W", IDM_FIT
+    MENUITEM "~25%",                   IDM_25
+    MENUITEM "~50%",                   IDM_50
+    MENUITEM "~75%",                   IDM_75
+    MENUITEM "~100%\tCtrl+1",          IDM_100,, MIA_CHECKED
+    MENUITEM "2~00%",                  IDM_200
+    MENUITEM "~400%",                  IDM_400
+    MENUITEM "~800%",                  IDM_800
+  }
+  MENUITEM "~Properties",       IDM_PROP
+  SUBMENU  "~Help",             IDM_HELP
+  {
+    MENUITEM "~Help for help...", IDM_HELPHELP
+    MENUITEM "~Extended help...", IDM_HELPEXT,, MIA_DISABLED
+    MENUITEM "~Keys help...",     IDM_HELPKEYS,,MIA_DISABLED
+    MENUITEM "Help ~index",       IDM_HELPIND,, MIA_DISABLED
+    MENUITEM SEPARATOR
+    MENUITEM "~About IMSHOW",     IDM_ABOUT
+  }
+}
+
+/***************************************************************************/
+/* Definition of the accelerator keys:                                     */
+/***************************************************************************/
+ACCELTABLE ID_RESOURCE PRELOAD
+{
+  VK_F3,     IDM_QUIT, VIRTUALKEY
+  "^W",      IDM_FIT  /* This one doesn't work, who knows why????          */
+  "1",       IDM_100, CONTROL
+}
+
+/***************************************************************************/
+/* Definitions of the strings:                                             */
+/*                                                                         */
+/* One should really define all used strings in the resource file, so the  */
+/* application can be translated without recompiling it. However, there    */
+/* are still some hardcoded strings in imShow...                           */
+/***************************************************************************/
+STRINGTABLE PRELOAD
+{
+  IDS_HELPTITLE, "IMSHOW - Help"
+  IDS_TYPEERR,   "The file is not an 'im', GIF, or OS/2 bitmap file."
+  IDS_IMTITLE,   "IMSHOW"
+  IDS_HELP,      "Sorry, no online help"
+  IDS_ERRTITLE,  "Error"
+  IDS_FILEERR,   "The file could not be loaded (it probably doesnt't exist)."
+  IDS_FLTERR,    "The 'im'-type IMFLT is not supported."
+  IDS_GIFERR,    "GIF-Error:"
+  IDS_GIFUNEX,   "Unexpected error"
+  IDS_GIF_NOIMG, "No image data"
+  IDS_GIF_BOGUS, "Bogus byte in file"
+  IDS_GIF_INTL,  "Cannot read interlaced"
+}
+
+/***************************************************************************/
+/*     "About" dialogbox:                                                  */
+/*                                                                         */
+/*     The NOT_WS_SAVEBITS option below is because of a bug in the current */
+/*     Palette Manager; the SAVEBITS option (which would be the default)   */
+/*     doesn't work correctly.                                             */
+/*                                                                         */
+/***************************************************************************/
+DLGTEMPLATE IDD_ABOUT
+{
+  DIALOG "", 0, 32, 32, 210, 140,NOT WS_SAVEBITS,FCF_DLGBORDER
+  {
+    CTEXT "imShow"                                   -1, 10, 120, 190,  8
+    ICON  ID_RESOURCE                                -1,  8, 104,   0,  0
+    CTEXT "in 'im', GIF, or OS/2 bitmap format."     -1, 10,  88, 190,  8
+    CTEXT "Version 2.02,  1/93"                      -1, 10,  80, 190,  8
+    CTEXT "Institut fÅr Informatik (ifi),"           -1, 10,  40, 190,  8
+    CTEXT "UniversitÑt ZÅrich, 1993"                 -1, 10,  32, 190,  8
+    CTEXT "Utility to display pictures"              -1, 10,  96, 190,  8
+    CTEXT "Developed by Martin Erzberger, 1989/93"   -1, 10,  68, 190,  8
+    DEFPUSHBUTTON "Ok"                           DID_OK, 85,   8,  40, 16, WS_GROUP
+  }
+}
+
+
+/***************************************************************************/
+/*     "Loading"  dialogbox:                                               */
+/***************************************************************************/
+DLGTEMPLATE IDD_CANCEL
+{
+  DIALOG "", 256, 80, 132, 128, 64, WS_VISIBLE
+  {
+    CTEXT "Loading..."                 -1,          26, 45, 80, 8
+    RTEXT ""                           IDD_PERCENT, 21, 29, 15, 8
+    LTEXT "% of file loaded"           -1,          36, 29, 80, 8
+    DEFPUSHBUTTON "Esc = break"        DID_CANCEL,  25,  2, 76, 12, WS_GROUP
+  }
+}
+
+/***************************************************************************/
+/*     "Parameter" dialogbox:                                              */
+/***************************************************************************/
+DLGTEMPLATE IDD_PROP
+{
+  DIALOG "", 256, 100, 100, 130, 116, NOT WS_SAVEBITS, FCF_DLGBORDER
+  {
+    CTEXT "Image properties"     -1,            4, 100, 116, 8
+    LTEXT "Type:"                -1,            4,  84, 84,  8
+    RTEXT ""                     IDD_TYPE,     88,  84, 36,  8
+    LTEXT "Storage method:"      -1,            4,  74, 84,  8
+    RTEXT ""                     IDD_STORAGE,  88,  74, 36,  8
+    LTEXT "Size in X:"           -1,            4,  64, 84,  8
+    RTEXT ""                     IDD_SIZEX,    88,  64, 36,  8
+    LTEXT "Size in Y:"           -1,            4,  54, 84,  8
+    RTEXT ""                     IDD_SIZEY,    88,  54, 36,  8
+    LTEXT "Samples / Pixel:"     -1,            4,  44, 84,  8
+    RTEXT ""                     IDD_SAMPLES,  88,  44, 36,  8
+    LTEXT "Bits / Sample:"       -1,            4,  34, 84,  8
+    RTEXT ""                     IDD_DEPTH,    88,  34, 36,  8
+    LTEXT "Colors (in Colormap):"-1,            4,  24, 84,  8
+    RTEXT ""                     IDD_COLORS,   88,  24, 36,  8
+    DEFPUSHBUTTON "Ok"           DID_OK,       42,   4, 40, 16, WS_GROUP
+  }
+}
+
