@@ -1,0 +1,53 @@
+# IBM Developer's Workframe/2 Make File Creation run at 09:22:12 on 01/05/93
+
+# Make File Creation run in directory:
+#   C:\DATEN\SOURCE\IMSHOW;
+
+# Assumed INCLUDE environment variable path:
+#   C:\DATEN\SOURCE\MYINCLUDE;
+#   C:\IBMC\INCLUDE;
+#   C:\TOOLKT20\C\OS2H;
+#   C:\TCPIP\INCLUDE;
+
+
+imShow.RES:  imShow.rc  \
+#  {.;$(INCLUDE)}OS2.H  \
+   {.;$(INCLUDE)}IMSHOW.H  \
+   IMSHOW.ICO  \
+   IMSHOW.MAK
+
+BMLib.OBJ:  BMLib.c  \
+#  {$(INCLUDE);}os2.h  \
+#  {$(INCLUDE);}stdio.h  \
+#  {$(INCLUDE);}stdlib.h  \
+#  {$(INCLUDE);}string.h  \
+   IMSHOW.MAK
+
+FileDlg.OBJ:  FileDlg.c  \
+#  {$(INCLUDE);}os2.h  \
+#  {$(INCLUDE);}stdio.h  \
+#  {$(INCLUDE);}string.h  \
+#  {$(INCLUDE);}memory.h  \
+   IMSHOW.MAK
+
+GIFLib.OBJ:  GIFLib.c  \
+#  {$(INCLUDE);}os2.h  \
+#  {$(INCLUDE);}stdio.h  \
+#  {$(INCLUDE);}stdlib.h  \
+#  {$(INCLUDE);}string.h  \
+   {.;$(INCLUDE);}imshow.h  \
+   IMSHOW.MAK
+
+imShow.OBJ:  imShow.c  \
+#  {$(INCLUDE);}os2.h  \
+#  {$(INCLUDE);}stdlib.h  \
+#  {$(INCLUDE);}stdio.h  \
+#  {$(INCLUDE);}string.h  \
+   {.;$(INCLUDE);}imshow.h  \
+   {.;$(INCLUDE);}bmlib.h  \
+   {.;$(INCLUDE);}giflib.h  \
+   {.;$(INCLUDE);}im.h  \
+#    {$(INCLUDE);}stdio.h  \
+     {.;$(INCLUDE);}imgen.h  \
+#      {$(INCLUDE);}stdio.h  \
+   IMSHOW.MAK
