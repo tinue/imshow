@@ -6,6 +6,11 @@ of my master thesis equivalent at the University of Zurich.
 What follows is the original readme.txt file, spruced up with some markdown
 tags.
 
+Update: I also found the more or less original version 1.10 in the attic. It's in
+V1.1Archive for reference. This version was developed with a PS/2 70-A21,
+8414/A adapter and 8515 display. For V2, I had access to a PS/2 Model 90
+with XGA or XGA2 adapter, I can't remember which.
+
 ## imShow 2.02, January 1993
 imShow - An OS/2 2.0 application to display pictures in the formats:
 * BMP  (OS/2 1.1, Windows 3 and OS/2 2.0 formats)
@@ -28,7 +33,7 @@ look at this pictures as long as you don't touch the "View" menu.
 Of course on XGA and XGA-2 it still works as usual.
 
 ## Requirements
-* OS/2 2.0 with service pack installed (to get the palette manager). 
+* OS/2 2.0 with service pack installed (to get the palette manager).
 * A display adapter and driver which supports 256 colors and the
    palette manager (tested on the IBM XGA and XGA-2, limited function
    on Tseng ET4000).

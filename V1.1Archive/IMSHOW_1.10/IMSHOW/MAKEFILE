@@ -1,0 +1,70 @@
+#############################################################################
+#                                                                           #
+# MAKEFILE zu IMSHOW, Version 1.10, 1/90.                                   #
+#                                                                           #
+#  Die Compiler-Switches bedeuten im einzelnen:                             #
+#   /c   : Nur Kompilieren (kein Linken)                                    #
+#   /Alfu: Customized Storage-Model                                         #
+#   /W3  : Warning Level 3 (alle Warnungen)                                 #
+#   /G2  : Code fÅr 80286 / 80386                                           #
+#   /Gs  : Kein Test fÅr Stack-Overflow                                     #
+#   /Gc  : Pascal Calling Convention                                        #
+#   /Zi  : Informationen fÅr Debugger werden angehÑngt                      #
+#   /Zp  : Structures werden gepackt                                        #
+#   /Ox  : Optimieren eingeschaltet                                         #
+#                                                                           #
+#  Die Linker-Switches bedeuten:                                            #
+#   /A:16: Align auf 16-Bit Boundaries                                      #
+#   /COD:  Codeview, Debugger-Informationen werden angehÑngt                #
+#                                                                           #
+#                                                                           #
+# Bei CV=y werden Debugging-Informationen ins EXE-File eingebunden. Dadurch #
+# wird das File grîsser und etwas langsamer.                                #
+# Mit CV=n wird dies ausgeschaltet.                                         #
+#                                                                           #
+#############################################################################
+
+CV=n
+
+
+!IF "$(CV)" == "y"
+LINKOPT = /A:16 /COD
+COPT    = /c /Alfu /W3 /G2sc /Zip
+!ELSE
+LINKOPT = /A:16
+COPT    = /c /Alfu /W3 /G2sc /Zp /Ox
+!ENDIF
+
+all: imshow.exe im2bmp.exe bmp2im.exe
+
+imshow.exe: imshow.obj imshow.def imshow.res filedlg.obj bmlib.obj
+  link imshow.obj+filedlg.obj+bmlib.obj $(LINKOPT), \
+    imshow.exe, NUL /NOD, llibcmt.lib+os2.lib+imlib.lib,imshow.def
+  rc imshow.res
+
+imshow.obj:  imshow.c imshow.h bmlib.h im.h makefile
+  cl $(COPT) imshow.c
+
+filedlg.obj: filedlg.c imshow.h makefile
+  cl $(COPT) filedlg.c
+
+bmlib.obj: bmlib.c bmlib.h makefile
+  cl $(COPT) bmlib.c
+
+imshow.res: imshow.ico imshow.rc imshow.h
+  rc -r imshow
+
+im2bmp.exe: im2bmp.obj im2bmp.def bmlib.obj
+  link im2bmp.obj+bmlib.obj $(LINKOPT), \
+    im2bmp.exe, NUL, os2.lib+imlib.lib, im2bmp.def
+
+im2bmp.obj: im2bmp.c bmlib.h im.h makefile
+  cl $(COPT) im2bmp.c
+
+bmp2im.exe: bmp2im.obj bmp2im.def bmlib.obj
+  link bmp2im.obj+bmlib.obj $(LINKOPT), \
+    bmp2im.exe, NUL, os2.lib+imlib.lib, bmp2im.def
+
+bmp2im.obj: bmp2im.c bmlib.h im.h makefile
+  cl $(COPT) bmp2im.c
+

@@ -1,0 +1,57 @@
+LIBRARY        IMLIB  INITINSTANCE
+
+DESCRIPTION    '"im"-Library, Version 0.93(beta)'
+PROTMODE
+DATA           NONSHARED
+HEAPSIZE       1024
+
+EXPORTS imerrnum = _imerrnum
+        _imsettype
+        _imsetxsize
+        _imsetysize
+        _imsetstor
+        _imsetdepth
+        _imsetsamples
+        _imsetcolors
+        _imsetcmap
+        _imgettype
+        _imgetxsize
+        _imgetysize
+        _imgetstor
+        _imgetdepth
+        _imgetsamples
+        _imgetcolors
+        _imgetcmap
+        _imgetrowsize
+        _imrowalloc
+        _impicalloc
+        _immapalloc
+        _imfltalloc
+        _imopen
+        _imclose
+        _imflush
+        _imrhdr
+        _imwhdr
+        _imrcmap
+        _imwcmap
+        _imrrow
+        _imwrow
+        _imrpic
+        _imwpic
+        _imsplitrgb
+        _immergergb
+        _imrgb2grey
+        _imnormalize
+        _imrpix
+        _imrgry
+        _imrflt
+        _imwpix
+        _imwgry
+        _imwflt
+        _imridx
+        _imwidx
+        _imrcolor
+        _imwcolor
+        _impx2byte
+        _imbyte2px
+

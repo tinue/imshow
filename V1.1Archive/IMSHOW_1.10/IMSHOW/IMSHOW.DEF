@@ -1,0 +1,39 @@
+;*******************************  IMSHOW.DEF  *******************************
+;
+;  Modul Definitions File fÅr IMSHOW.EXE
+;
+;  IMSHOW.DEF, Version 1.10, 1/90
+;
+;  Das Modul-Definitions File enthÑlt zusÑtzliche Informationen fÅr den
+;  LINKER.
+;
+;  Das File 'OS2STUB.EXE' zeigt die Meldung "This program requires
+;    OS/2 Presentation Manager" an, wenn man versucht, das Programm
+;    unter DOS zu starten.
+;
+;  WINDOWAPI heisst, dass das Programm unter dem Presentation Mamager
+;            lÑuft.
+;
+;  Unter EXPORTS mÅssen alle Prozeduren aufgefÅhrt werden, die implizit
+;   oder explizit exportiert werden. Die unten aufgefÅhrten Prozeduren
+;   werden implizit exportiert, da sie vom Presentation Manager aufgerufen
+;   werden.
+
+
+NAME    IMSHOW WINDOWAPI
+
+DESCRIPTION 'Anzeige von Bildern im im-Format'
+
+STUB    'OS2STUB.EXE'
+
+DATA    MULTIPLE
+
+STACKSIZE   8192
+HEAPSIZE    2048
+
+PROTMODE
+
+EXPORTS   WinProc
+          AboutDlgProc
+          OpenDlgProc
+

@@ -1,2 +1,3 @@
 # Exclude clion
 /.idea/
+.DS_Store

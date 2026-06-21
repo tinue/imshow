@@ -1,0 +1,29 @@
+all: imlib.dll
+
+
+imlib.dll: imallo.obj imfile.obj imipix.obj imrw.obj imsetget.obj impack.obj imlib.lib imlib.def
+ LINK imallo+imfile+imipix+imrw+imsetget+impack /nod,imlib.dll /COD,NUL,os2+llibcdll,imlib.def,/align:16
+
+
+imlib.lib: imlib.def
+ IMPLIB imlib.lib imlib.def
+
+
+imallo.obj: imallo.c imlib.h imgen.h
+ CL -c -Alfu -G2s -W3 -Zi imallo.c
+
+imfile.obj: imfile.c imlib.h imgen.h impack.h
+ CL -c -Alfu -G2s -W3 -Zi imfile.c
+
+imipix.obj: imipix.c imlib.h imgen.h
+ CL -c -Alfu -G2s -W3 -Zi imipix.c
+
+imrw.obj: imrw.c imlib.h imgen.h impack.h
+ CL -c -Alfu -G2s -W3 -Zi imrw.c
+
+imsetget.obj: imsetget.c imlib.h imgen.h
+ CL -c -Alfu -G2s -W3 -Zi imsetget.c
+
+impack.obj: impack.c imlib.h imgen.h impack.h
+ CL -c -Alfu -G2s -W3 -Zi impack.c
+

@@ -1,0 +1,29 @@
+;********************************  P3DF.DEF  ********************************
+;
+;  P3DF.DEF, Version 1.00, 8/89
+;
+;  Das Modul-Definitions File enthÑlt zusÑtzliche Informationen fÅr den
+;  LINKER.
+;
+;  Das File 'OS2STUB.EXE' zeigt die Meldung "This program requires
+;    OS/2 Presentation Manager" an, wenn man versucht, das Programm
+;    unter DOS zu starten.
+
+
+NAME    P3DF WINDOWAPI
+
+DESCRIPTION 'Perspektivische Darstellung dreidimensionaler Funktionen'
+
+STUB    'OS2STUB.EXE'
+
+DATA    MULTIPLE
+
+STACKSIZE   4096
+HEAPSIZE    1024
+
+PROTMODE
+
+EXPORTS   WinProc
+          AboutDlgProc
+          DlgProc
+

@@ -1,0 +1,170 @@
+/*****************************  IMSHOW.RC  *********************************/
+/*                                                                         */
+/*  Ressourcenfile zu IMSHOW.EXE                                           */
+/*                                                                         */
+/*  IMSHOW.RC, Version 1.10, 1/90                                          */
+/*                                                                         */
+/*  Alle Ressourcen eines Programms sind in einem Ressourcen File          */
+/*  gespeichert. Ressourcen sind z.B. MenueintrÑge, Texte, Icons etc.      */
+/*  Dieses File wird vom "Ressource-Compiler" Åbersetzt und zum restlichen */
+/*  Programm dazugelinkt.                                                  */
+/*                                                                         */
+/***************************************************************************/
+
+#include <os2.h>        /* FÅr OS/2 spezifische Bezeichner                 */
+#include "imshow.h"     /* Die Bezeichner (wie IDM_FILE) sind im Header-   */
+                        /* File definiert, deshalb muss es hier auch im-   */
+                        /* portiert werden.                                */
+
+/***************************************************************************/
+/* Das unter "ICON" angegebene Bitmapfile wird zur Darstellung des         */
+/* Programmes im Sinnbildmodus verwendet.                                  */
+/***************************************************************************/
+ICON    ID_RESOURCE imshow.ico
+
+/***************************************************************************/
+/* Definition der Menuleiste der Applikation:                              */
+/***************************************************************************/
+MENU    ID_RESOURCE PRELOAD
+{
+  SUBMENU "~File",              IDM_FILE
+  {
+    MENUITEM "~Open...",          IDM_OPEN
+    MENUITEM SEPARATOR
+    MENUITEM "~Save as...",       IDM_WRITE
+    MENUITEM SEPARATOR
+    MENUITEM "~Exit\tF3",         IDM_QUIT
+  }
+  SUBMENU "~Edit",              IDM_CLIPBOARD
+  {
+    MENUITEM "~Copy\tCtrl + Ins", IDM_COPY,,    MIA_DISABLED
+  }
+  SUBMENU "~View",              IDM_OPTIONS
+  {
+    MENUITEM "~Scroll",           IDM_SCROLL,,  MIA_CHECKED
+    MENUITEM "~Fit",              IDM_COMP
+  }
+  MENUITEM "~Properties",       IDM_PARAM
+  SUBMENU  "~Help",             IDM_HELP
+  {
+    MENUITEM "~Help for help...", IDM_HELPHELP
+    MENUITEM "~Extended help...", IDM_HELPEXT,, MIA_DISABLED
+    MENUITEM "~Keys help...",     IDM_HELPKEYS,,MIA_DISABLED
+    MENUITEM "Help ~index",       IDM_HELPIND,, MIA_DISABLED
+    MENUITEM SEPARATOR
+    MENUITEM "~About IMSHOW",     IDM_ABOUT
+  }
+}
+
+/***************************************************************************/
+/* Definitionen der "Accelerators". Accelerators sind TastenkÅrzel fÅr     */
+/* Menuauswahlen. Hier ruft z.B. die Taste 'F3' direkt das Menu            */
+/* 'File, Exit' auf.                                                       */
+/***************************************************************************/
+ACCELTABLE ID_RESOURCE PRELOAD
+{
+  VK_INSERT, IDM_COPY, VIRTUALKEY, CONTROL
+  VK_F3,     IDM_QUIT, VIRTUALKEY
+}
+
+/***************************************************************************/
+/* Definitionen aller verwendeten Strings:                                 */
+/*                                                                         */
+/* Nicht nur Menuleisten etc. sollten im Ressourcenfile definiert werden,  */
+/* sondern auch alle verwendeten Strings fÅr Fehlermeldungen etc. Auf diese*/
+/* Weise kann das Programm sehr einfach in eine andere Sprache Åbersetzt   */
+/* werden.                                                                 */
+/***************************************************************************/
+STRINGTABLE PRELOAD
+{
+  IDS_HELPTITLE, "IMSHOW - Help"
+  IDS_HELP,      "Help would be provided here."
+  IDS_ERRTITLE,  "Error"
+  IDS_FILEERR,   "The file could not be loaded (it probably doesnt't exist)."
+  IDS_TYPEERR,   "The file is not an 'im' or OS/2 bitmap file."
+  IDS_FLTERR,    "The 'im'-type IMFLT is not supported."
+  IDS_IMTITLE,   "IMSHOW"
+  IDS_CONVERT,   "Conversion started."
+  IDS_FILEOPEN,  "Save file"
+  IDS_DID_OK,    "Save as.."
+}
+
+/***************************************************************************/
+/*     "About"-Dialogbox:                                                  */
+/***************************************************************************/
+DLGTEMPLATE IDD_ABOUT
+{
+  DIALOG "", 0, 32, 32, 210, 140,, FCF_DLGBORDER
+  {
+    CTEXT "IMSHOW"                                   -1, 10, 120, 190,  8
+    ICON  ID_RESOURCE                                -1,  8, 104,   0,  0
+    CTEXT "Displayer for pictures"                   -1, 10,  96, 190,  8
+    CTEXT "in the 'im' and OS/2 bitmap format."      -1, 10,  88, 190,  8
+    CTEXT "Version 1.10, 1/90"                       -1, 10,  80, 190,  8
+    CTEXT "Programmed by Martin Erzberger, 1989/90"  -1, 10,  68, 190,  8
+    CTEXT "Semesterarbeit in Informatik,"            -1, 10,  40, 190,  8
+    CTEXT "University of ZÅrich, 1990"               -1, 10,  32, 190,  8
+    DEFPUSHBUTTON "Ok"                           DID_OK, 85,   8,  40, 16, WS_GROUP
+  }
+}
+
+/***************************************************************************/
+/*     "Datei, ôffnen" - Dialogbox:                                        */
+/***************************************************************************/
+DLGTEMPLATE IDD_OPEN
+{
+  DIALOG "", 0, 8, 8, 240, 180,, FCF_DLGBORDER
+  {
+    CTEXT "Open file"              IDD_FILEOPEN,    8, 154, 224,   8
+    LTEXT "Select with mouse or enter filename"  -1,8, 138, 224,   8
+    LTEXT "Directory:"             -1,              8, 126,  80,   8
+    LTEXT ""                       IDD_PATH,       88, 126, 144,   8
+    LTEXT "Filename:"              -1,              8, 110,  56,   8
+    ENTRYFIELD ""                  IDD_FILEEDIT,   64, 110, 168,   8, ES_MARGIN
+    CTEXT "Directories"            -1,             16,  96,  92,   8
+    CTEXT "Files"                  -1,            134,  96,  92,   8
+    LISTBOX                        IDD_DIRLIST,    16,  32,  92,  64
+    LISTBOX                        IDD_FILELIST,  134,  32,  92,  64
+    DEFPUSHBUTTON "Open"           DID_OK,         32,   8,  64,  16, WS_GROUP
+    PUSHBUTTON "Esc=Cancel"        DID_CANCEL,    144,   8,  64,  16, WS_GROUP
+  }
+}
+
+/***************************************************************************/
+/*     "Am Laden" - Dialogbox:                                             */
+/***************************************************************************/
+DLGTEMPLATE IDD_CANCEL
+{
+  DIALOG "", 256, 80, 132, 128, 48, WS_VISIBLE
+  {
+    CTEXT "Loading..."                 -1,          26, 29, 80, 8
+    DEFPUSHBUTTON "Esc = break"        DID_CANCEL,  25,  2, 76, 12, WS_GROUP
+  }
+}
+
+/***************************************************************************/
+/*     "Parameter" - Dialogbox:                                            */
+/***************************************************************************/
+DLGTEMPLATE IDD_PARAM
+{
+  DIALOG "", 256, 100, 100, 124, 114, FCF_DLGBORDER
+  {
+    CTEXT "Image properties"     -1,            4, 100, 116, 8
+    LTEXT "Type:"                -1,            4,  84, 84,  8
+    RTEXT ""                     IDD_TYPE,     88,  84, 36,  8
+    LTEXT "Storage method:"      -1,            4,  74, 84,  8
+    RTEXT ""                     IDD_STORAGE,  88,  74, 36,  8
+    LTEXT "Size in X:"           -1,            4,  64, 84,  8
+    RTEXT ""                     IDD_SIZEX,    88,  64, 36,  8
+    LTEXT "Size in Y:"           -1,            4,  54, 84,  8
+    RTEXT ""                     IDD_SIZEY,    88,  54, 36,  8
+    LTEXT "Samples / Pixel:"     -1,            4,  44, 84,  8
+    RTEXT ""                     IDD_SAMPLES,  88,  44, 36,  8
+    LTEXT "Bits / Sample:"       -1,            4,  34, 84,  8
+    RTEXT ""                     IDD_DEPTH,    88,  34, 36,  8
+    LTEXT "Colors (in Colormap):"-1,            4,  24, 84,  8
+    RTEXT ""                     IDD_COLORS,   88,  24, 36,  8
+    DEFPUSHBUTTON "Ok"           DID_OK,       42,   4, 40, 16, WS_GROUP
+  }
+}
+

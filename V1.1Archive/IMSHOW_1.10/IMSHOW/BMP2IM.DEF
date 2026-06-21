@@ -1,0 +1,23 @@
+;*******************************  BMP2IM.DEF  *******************************
+;
+;  Modul-Definitions File fr BMP2IM.EXE
+;
+;  BMP2IM.DEF, Version 1.10, 1/90
+;
+;  Das Modul-Definitions File enth„lt zus„tzliche Informationen fr den
+;  LINKER.
+;
+;  WINDOWCOMPAT heisst, dass das Programm im einem Textfenster
+;               unter dem Presentation Manager laufen kann.
+
+NAME    BMP2IM WINDOWCOMPAT
+
+DESCRIPTION 'Konvertierung bmp --> im'
+
+DATA    MULTIPLE
+
+STACKSIZE   4048
+HEAPSIZE    2048
+
+PROTMODE
+

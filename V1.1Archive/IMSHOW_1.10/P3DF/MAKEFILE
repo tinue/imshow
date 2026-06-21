@@ -1,0 +1,33 @@
+#############################################################################
+#                                                                           #
+#  MAKEFILE zu P3DF, Version 1.00                                           #
+#                                                                           #
+# Die Compiler-Switches bedeuten im einzelnen:                              #
+#  /c   : Nur Kompilieren (kein Linken)                                     #
+#  /Alfw: Customized Storage Model                                          #
+#  /W3  : Warning Level 3 (alle Warnungen)                                  #
+#  /G2  : Code fÅr 80286 / 80386                                            #
+#  /Gs  : Kein Test fÅr Stack-Overflow                                      #
+#  /Gc  : Pascal Calling Convention                                         #
+#  /Zi  : Informationen fÅr den Debugger werden angehÑngt                   #
+#  /Zp  : Structures werden gepackt                                         #
+#                                                                           #
+# Der Linker-Switch bedeutet:                                               #
+#  @p3df.l: Die Command-Line Options sind aus dem File "p3df.l" zu holen    #
+#                                                                           #
+#############################################################################
+
+
+all: p3df.exe
+
+
+p3df.exe: p3df.obj p3df.def p3df.l p3df.res
+  link @p3df.l
+  rc p3df.res
+
+p3df.obj: p3df.c p3df.h
+  cl /c /Alfw /W3 /G2sc /Zip p3df.c
+
+p3df.res: p3df.ico p3df.rc p3df.h
+  rc -r p3df
+

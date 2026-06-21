@@ -1,0 +1,122 @@
+/*****************************  P3DF.RC  ***********************************/
+/*                                                                         */
+/*  Ressourcenfile zu P3DF.EXE                                             */
+/*                                                                         */
+/*  P3DF.RC, Version 1.00, 8/89                                            */
+/*                                                                         */
+/*  Alle Ressourcen eines Programms sind in einem Ressourcen File          */
+/*  gespeichert. Ressourcen sind z.B. MenueintrÑge, Texte, Icons etc.      */
+/*  Dieses File wird vom "Ressource-Compiler" Åbersetzt und zum restlichen */
+/*  Programm dazugelinkt.                                                  */
+/*                                                                         */
+/***************************************************************************/
+
+#include <os2.h>
+#include "p3df.h"       /* Die beiden Header-Files mÅssen auch im          */
+                        /* verwendeten Bezeichner (z.B ID_FILE etc.) dort  */
+                        /* definiert sind.                                 */
+
+ICON    ID_RESOURCE p3df.ico  /* Das verwendete Icon, wenn das Fenster     */
+                              /* "minimized" ist.                          */
+
+MENU    ID_RESOURCE PRELOAD   /* Die Definition der Menuleiste             */
+{
+  SUBMENU "~File",              IDM_FILE
+  {
+    MENUITEM "~Neu\tAlt+n",       IDM_NEW,,     MIA_DISABLED
+    MENUITEM "~ôffnen",           IDM_OPEN,,    MIA_DISABLED
+    MENUITEM SEPARATOR
+    MENUITEM "~Speichern\tAlt+s", IDM_SAVE,,    MIA_DISABLED
+    MENUITEM "Speichern ~als...", IDM_SAVEAS,,  MIA_DISABLED
+    MENUITEM SEPARATOR
+    MENUITEM "S~peichern / Quit", IDM_SAVEQUIT,,MIA_DISABLED
+    MENUITEM "~Quit\tF3",         IDM_QUIT
+    MENUITEM SEPARATOR
+    MENUITEM "~Drucken",          IDM_PRINT,,   MIA_DISABLED
+    MENUITEM SEPARATOR
+    MENUITEM "ö~ber P3DF...",     IDM_ABOUT
+  }
+  MENUITEM "~Parameter...",     IDM_PARAM
+  MENUITEM "~F1=Hilfe",         IDM_HELP,     MIS_HELP | MIS_BUTTONSEPARATOR
+}
+
+ACCELTABLE ID_RESOURCE PRELOAD  /* Definition der "accelerators", wie      */
+{                               /* z.B. Alt+s, F3 etc.                     */
+  "P",   IDM_PARAM, CHAR, ALT
+  "p",   IDM_PARAM, CHAR, ALT
+  VK_F3, IDM_QUIT , VIRTUALKEY
+}
+
+STRINGTABLE PRELOAD           /* Definition aller sonstigen Texte          */
+BEGIN
+  IDS_ETITLE,    "Eingabefehler"
+  IDS_EALPHA,    "Alpha muss zwischen -45 und +45 Grad liegen!"
+  IDS_EBETA,     "Beta muss zwischen 0 und 360 Grad liegen!"
+  IDS_EGAMMA,    "Gamma muss zwischen 10 und 45 Grad liegen!"
+  IDS_EMINMAX,   "Die minimale Distanz muss kleiner
+                  als die maximale Distanz sein!"
+  IDS_EVERTIKAL, "Die vertikale Verschiebung muss
+                  zwischen -10 und +10 liegen!"
+  IDS_EEBENEN,   "Ebenen muss zwischen 3 und 300 liegen!"
+  IDS_EDICHTE,   "Punktedichte muss zwischen 1 und 10 liegen!"
+  IDS_HELP,      "Don't worry, be happy!"
+  IDS_HELPTITLE, "P3DF - Hilfe"
+END
+
+DLGTEMPLATE IDD_ABOUT
+{
+  DIALOG "", 0, 32, 32, 200, 96,, FCF_DLGBORDER
+  {
+    CTEXT "P3DF"                                , -1, 10, 72, 180,  8
+    ICON  ID_RESOURCE                           , -1,  8, 64,   0,  0
+    CTEXT "Perspektivische Darstellung"         , -1, 10, 48, 180,  8
+    CTEXT "dreidimensionaler Funktionen"        , -1, 10, 40, 180,  8
+    CTEXT "Copyright (C) Martin Erzberger, 1989", -1, 10, 32, 180,  8
+    DEFPUSHBUTTON "Ok"                    DID_OK, 80,  8,  40, 16, WS_GROUP
+  }
+}
+
+/* Die Dialog-Box:                                                         */
+DLGTEMPLATE ID_DIALOG LOADONCALL MOVEABLE DISCARDABLE
+{
+  DIALOG "", ID_DIALOG, 19, 34, 330, 148, FS_NOBYTEALIGN | FS_DLGBORDER |
+              WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS
+  {
+    LTEXT "Alpha (-45..45 Grad):"  , -1, 4,  136,  88, 8
+    LTEXT "Beta (0..360 Grad):"    , -1, 4,  122,  82, 8
+    LTEXT "Gamma (10..45 Grad):"   , -1, 4,  108,  96, 8
+    LTEXT "vertikale Verschiebung:", -1, 4,   86, 106, 8
+    LTEXT "Ebenen (3..300):"       , -1, 4,   72,  76, 8
+    LTEXT "Punktedichte (1..10):"  , -1, 4,   58,  91, 8
+    LTEXT "minimale Distanz:"      , -1, 202, 122,  82, 8
+    LTEXT "maximale Distanz:"      , -1, 202, 108,  85, 8
+
+    ENTRYFIELD "", IDD_ALPHA,    111, 136, 22, 9, ES_MARGIN | ES_RIGHT | WS_GROUP
+    ENTRYFIELD "", IDD_BETA,     111, 122, 22, 9, ES_MARGIN | ES_RIGHT
+    ENTRYFIELD "", IDD_GAMMA,    111, 108, 22, 9, ES_MARGIN | ES_RIGHT
+    ENTRYFIELD "", IDD_VERTIKAL, 111,  86, 22, 9, ES_MARGIN | ES_RIGHT
+    ENTRYFIELD "", IDD_EBENEN,   111,  72, 22, 9, ES_MARGIN | ES_RIGHT
+    ENTRYFIELD "", IDD_DICHTE,   111,  58, 22, 9, ES_MARGIN | ES_RIGHT
+
+    AUTOCHECKBOX "Folgende Werte in Grad:", IDD_GRAD, 202, 136, 124, 10, WS_GROUP
+    ENTRYFIELD "", IDD_MIN,      296, 122, 30, 9, ES_MARGIN | ES_RIGHT | WS_GROUP
+    ENTRYFIELD "", IDD_MAX,      296, 108, 30, 9, ES_MARGIN | ES_RIGHT
+    AUTOCHECKBOX "zweiter Z-Wert?",         IDD_ZWERT, 202,  86, 88, 10, WS_GROUP
+
+
+    GROUPBOX        "Formel",      -1,              4,  4, 225,48
+    AUTORADIOBUTTON "Wellen 1",    IDD_WELLEN1,     8, 32, 64, 10, WS_GROUP
+    AUTORADIOBUTTON "Wellen 2",    IDD_WELLEN2,     8, 20, 64, 10
+    AUTORADIOBUTTON "Gewîlbe",     IDD_GEWOELBE,    8,  8, 64, 10
+    AUTORADIOBUTTON "Faltblatt",   IDD_FALTBLATT,  83, 32, 64, 10
+    AUTORADIOBUTTON "Berge",       IDD_BERGE,      83, 20, 64, 10
+    AUTORADIOBUTTON "DÅnen",       IDD_DUENEN,     83,  8, 64, 10
+    AUTORADIOBUTTON "Kugel",       IDD_KUGEL,     158, 32, 64, 10
+    AUTORADIOBUTTON "Kugelsektor", IDD_SEKTOR,    158, 20, 64, 10
+
+    DEFPUSHBUTTON "Ok",     DID_OK,     288, 34, 38, 12, WS_GROUP
+    PUSHBUTTON    "Cancel", DID_CANCEL, 288, 19, 38, 12
+    PUSHBUTTON    "Hilfe",  IDD_HILFE,  288,  4, 38, 12, BS_HELP
+  }
+}
+
